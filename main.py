@@ -7,10 +7,10 @@ from textual.command import Hit, Hits, Provider
 con = sqlite3.connect("items.db")
 cur = con.cursor()
 cur.execute("""
-CREATE TABLE IF NOT EXISTS pubs('name' TEXT, 'count' INTEGER, 'weight' REAL)
+CREATE TABLE IF NOT EXISTS items('name' TEXT, 'count' INTEGER, 'weight' REAL)
 """)
 
-ITEMS = set(cur.execute('SELECT "name" FROM "pubs"').fetchall()[0])
+ITEMS = set(cur.execute('SELECT "name" FROM "items"').fetchall()[0])
 
 
 class ItemSearch(Provider):
@@ -32,7 +32,7 @@ class CountCalc(App[None]):
     COMMANDS = {ItemSearch}
 
     def calc(self, name: str) -> None:
-        item = cur.execute("SELECT * FROM pubs WHERE name = ? ", (name,))
+        item = cur.execute("SELECT * FROM items WHERE name = ? ", (name,))
 
 
 if __name__ == "__main__":
