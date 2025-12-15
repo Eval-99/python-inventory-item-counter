@@ -1,0 +1,20 @@
+/* Screen { */
+/*   layout: vertical; */
+/*   align: center middle; */
+/* } */
+Label {
+  content-align: center middle;
+  background: red;
+}
+.question {
+  text-style: bold;
+  content-align: center middle;
+}
+/* Static { */
+/*   background: white; */
+/* } */
+/* .box { */
+/*   height: 1fr; */
+/*   border: solid green; */
+/*   align: center middle; */
+/* } */

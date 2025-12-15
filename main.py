@@ -1,8 +1,9 @@
 import sqlite3
 from functools import partial
 
-from textual.app import App
+from textual.app import App, ComposeResult
 from textual.command import Hit, Hits, Provider
+from textual.widgets import Label, Static
 
 con = sqlite3.connect("items.db")
 cur = con.cursor()
@@ -10,7 +11,7 @@ cur.execute("""
 CREATE TABLE IF NOT EXISTS items('name' TEXT, 'count' INTEGER, 'weight' REAL)
 """)
 
-ITEMS = set(cur.execute('SELECT "name" FROM "items"').fetchall()[0])
+ITEMS = {row[0] for row in cur.execute("SELECT name FROM items").fetchall()}
 
 
 class ItemSearch(Provider):
@@ -30,9 +31,16 @@ class ItemSearch(Provider):
 
 class CountCalc(App[None]):
     COMMANDS = {ItemSearch}
+    CSS_PATH = "style.css"
+    # COMMAND_PALETTE_BINDING = "ctrl+backslash"
+
+    def compose(self) -> ComposeResult:
+        yield Label("Waiting…", id="output", classes="box")
 
     def calc(self, name: str) -> None:
         item = cur.execute("SELECT * FROM items WHERE name = ? ", (name,))
+        label = self.query_one("#output", Label)
+        label.update("asdfasddf")
 
 
 if __name__ == "__main__":
