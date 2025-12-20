@@ -8,6 +8,7 @@ wheels/
 items.db
 pub-counter.py
 data-base.py
+temp.py
 
 # Virtual environments
 .venv
