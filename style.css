@@ -1,20 +1,13 @@
-/* Screen { */
-/*   layout: vertical; */
-/*   align: center middle; */
-/* } */
-Label {
-  content-align: center middle;
-  background: red;
+Screen {
+  align: center middle;
 }
-.question {
-  text-style: bold;
-  content-align: center middle;
+
+.start {
+  width: 40;
+  height: 5;
+  margin: 1;
+  padding: 1;
+  background: green;
+  color: white 90%;
+  border: heavy white;
 }
-/* Static { */
-/*   background: white; */
-/* } */
-/* .box { */
-/*   height: 1fr; */
-/*   border: solid green; */
-/*   align: center middle; */
-/* } */
