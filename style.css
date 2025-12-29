@@ -1,13 +1,15 @@
 Screen {
   align: center middle;
+  layout: grid;
+  grid-size: 2 5;
 }
 
 .start {
-  width: 40;
-  height: 5;
-  margin: 1;
-  padding: 1;
-  background: green;
-  color: white 90%;
-  border: heavy white;
+  text-align: center;
+  width: 100%;
+  border: round $primary;
+}
+
+.itemInput {
+  width: 50%;
 }
