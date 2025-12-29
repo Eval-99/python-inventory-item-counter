@@ -31,9 +31,10 @@ class ItemSearch(Provider):
                 )
 
 
-class CountCalc(App[None]):
+class CountCalc(App):
     COMMANDS = {ItemSearch}
     CSS_PATH = "style.css"
+    COMMAND_PALETTE_BINDING = "ctrl+f"
 
     def compose(self) -> ComposeResult:
         self.delete = False
@@ -47,10 +48,9 @@ class CountCalc(App[None]):
             "SELECT * FROM items WHERE name = ? ", (name,)
         ).fetchone()
 
-        res = round(
-            (float(0.300) / float(self.item[2]) * float(self.item[1])),
-            2,
-        )
+        self.label = self.query_one("#startscreen", Label)
+        self.label.update(f"{self.item[0]}")
+
         try:
             self.center = self.query_one(".remove", Center)
             self.center.remove()
@@ -58,10 +58,14 @@ class CountCalc(App[None]):
             pass
 
         container = self.query_one(Container)
-        container.mount(Center(Input("Hi", classes="itemInput"), classes="remove"))
+        container.mount(Center(Input(classes="itemInput"), classes="remove"))
+        input = self.query_one(".itemInput", Input)
+        input.focus()
 
-        self.label = self.query_one("#startscreen", Label)
-        self.label.update(f"{self.item[0]}, {self.item[1]}, {self.item[2]}\n{res}")
+        res = round(
+            (float(0.300) / float(self.item[2]) * float(self.item[1])),
+            2,
+        )
 
 
 if __name__ == "__main__":
