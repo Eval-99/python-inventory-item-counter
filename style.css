@@ -1,7 +1,12 @@
 Screen {
+  border: round $primary;
   align: center middle;
   layout: grid;
-  grid-size: 2 5;
+  grid-size: 2 2;
+}
+
+Container {
+  border: round $primary;
 }
 
 .start {
@@ -11,5 +16,6 @@ Screen {
 }
 
 .itemInput {
+  border: round $primary;
   width: 50%;
 }

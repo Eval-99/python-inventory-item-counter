@@ -4,6 +4,7 @@ from functools import partial
 from textual.app import App, ComposeResult
 from textual.command import Hit, Hits, Provider
 from textual.containers import Center, Container
+from textual.css.query import NoMatches
 from textual.widgets import Input, Label
 
 con = sqlite3.connect("items.db")
@@ -50,10 +51,14 @@ class CountCalc(App[None]):
             (float(0.300) / float(self.item[2]) * float(self.item[1])),
             2,
         )
+        try:
+            self.center = self.query_one(".remove", Center)
+            self.center.remove()
+        except NoMatches:
+            pass
 
-        # If I select again from the command palette it crashes because of these couple of lines.
         container = self.query_one(Container)
-        container.mount(Center(Input("Hi", id="inputbox", classes="itemInput")))
+        container.mount(Center(Input("Hi", classes="itemInput"), classes="remove"))
 
         self.label = self.query_one("#startscreen", Label)
         self.label.update(f"{self.item[0]}, {self.item[1]}, {self.item[2]}\n{res}")
