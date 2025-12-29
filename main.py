@@ -2,10 +2,11 @@ import sqlite3
 from functools import partial
 
 from textual.app import App, ComposeResult
+from textual.binding import Binding
 from textual.command import Hit, Hits, Provider
 from textual.containers import Center, Container
 from textual.css.query import NoMatches
-from textual.widgets import Input, Label
+from textual.widgets import Footer, Input, Label
 
 con = sqlite3.connect("items.db")
 cur = con.cursor()
@@ -35,6 +36,10 @@ class CountCalc(App):
     COMMANDS = {ItemSearch}
     CSS_PATH = "style.css"
     COMMAND_PALETTE_BINDING = "ctrl+f"
+    BINDINGS = [
+        Binding("ctrl+q", "quit", "Quit", key_display="Ctrl+q"),
+        Binding("ctrl+f", "command_palette", "Search", key_display="Ctrl+f"),
+    ]
 
     def compose(self) -> ComposeResult:
         self.delete = False
@@ -42,6 +47,7 @@ class CountCalc(App):
         yield Container(
             Center(Label("Start. Hello", id="startscreen", classes="start"))
         )
+        yield Footer(show_command_palette=False)
 
     def calc(self, name: str) -> None:
         self.item = cur.execute(
