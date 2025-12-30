@@ -3,7 +3,7 @@ from functools import partial
 
 from textual.app import App, ComposeResult
 from textual.binding import Binding
-from textual.command import Hit, Hits, Provider
+from textual.command import CommandPalette, Hit, Hits, Provider
 from textual.containers import Center, Container
 from textual.css.query import NoMatches
 from textual.widgets import Footer, Input, Label
@@ -41,6 +41,11 @@ class CountCalc(App):
     # These do not exist but I modified the code of the textual library to create them. Potential PR?
     COMMAND_PALETTE_DESCRIPTION = "Search"
     COMMAND_PALETTE_TOOLTIP = "Press Ctrl+f or click this button to search database"
+
+    # CommandPalette(
+    #     providers=[ItemSearch],
+    #     placeholder="Search es…",
+    # )
 
     BINDINGS = [
         Binding(
