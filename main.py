@@ -33,6 +33,11 @@ class ItemSearch(Provider):
 
 
 class CustomCommandPalette(CommandPalette):
+    BINDINGS = [
+        Binding("ctrl+n", "command_list('cursor_down')", "Next command", show=False),
+        Binding("ctrl+p", "command_list('cursor_up')", "Previous command", show=False),
+    ]
+
     def __init__(self):
         super().__init__(placeholder=" Search database", providers=[ItemSearch])
 
