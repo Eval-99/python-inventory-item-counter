@@ -5,6 +5,10 @@ Screen {
   grid-size: 2 2;
 }
 
+.-command-palette {
+  dock: none;
+}
+
 Container {
   border: round $primary;
 }

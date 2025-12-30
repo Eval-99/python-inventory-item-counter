@@ -36,9 +36,20 @@ class CountCalc(App):
     COMMANDS = {ItemSearch}
     CSS_PATH = "style.css"
     COMMAND_PALETTE_BINDING = "ctrl+f"
+    COMMAND_PALETTE_DISPLAY = "Ctrl+f"
+
+    # These do not exist but I modified the code of the textual library to create them. Potential PR?
+    COMMAND_PALETTE_DESCRIPTION = "Search"
+    COMMAND_PALETTE_TOOLTIP = "Press Ctrl+f or click this button to search database"
+
     BINDINGS = [
-        Binding("ctrl+q", "quit", "Quit", key_display="Ctrl+q"),
-        Binding("ctrl+f", "command_palette", "Search", key_display="Ctrl+f"),
+        Binding(
+            "ctrl+q",
+            "quit",
+            "Quit",
+            key_display="Ctrl+q",
+            tooltip="Press Ctrl+q or click this button to quit",
+        ),
     ]
 
     def compose(self) -> ComposeResult:
@@ -47,7 +58,7 @@ class CountCalc(App):
         yield Container(
             Center(Label("Start. Hello", id="startscreen", classes="start"))
         )
-        yield Footer(show_command_palette=False)
+        yield Footer()
 
     def calc(self, name: str) -> None:
         self.item = cur.execute(
