@@ -23,29 +23,24 @@ class ItemSearch(Provider):
 
         for name in items:
             score = matcher.match(name)
-            if score > 0 and not self.app.delete and not self.app.update:
+            if score > 0 and not self.app.delete and not self.app.update:  # ty:ignore[unresolved-attribute]
                 yield Hit(
                     score,
                     matcher.highlight(name),
-                    partial(self.app.calc, name),
+                    partial(self.app.calc, name),  # ty:ignore[unresolved-attribute]
                     help="",
                 )
 
 
+class CustomCommandPalette(CommandPalette):
+    def __init__(self):
+        super().__init__(placeholder=" Search database", providers=[ItemSearch])
+
+
 class CountCalc(App):
-    COMMANDS = {ItemSearch}
     CSS_PATH = "style.css"
-    COMMAND_PALETTE_BINDING = "ctrl+f"
-    COMMAND_PALETTE_DISPLAY = "Ctrl+f"
-
-    # These do not exist but I modified the code of the textual library to create them. Potential PR?
-    COMMAND_PALETTE_DESCRIPTION = "Search"
-    COMMAND_PALETTE_TOOLTIP = "Press Ctrl+f or click this button to search database"
-
-    # CommandPalette(
-    #     providers=[ItemSearch],
-    #     placeholder="Search es…",
-    # )
+    ENABLE_COMMAND_PALETTE = False
+    COMMAND_PALETTE_DISPLAY = CustomCommandPalette
 
     BINDINGS = [
         Binding(
@@ -55,7 +50,17 @@ class CountCalc(App):
             key_display="Ctrl+q",
             tooltip="Press Ctrl+q or click this button to quit",
         ),
+        Binding(
+            "ctrl+f",
+            "custom_palette",
+            "Search",
+            key_display="Ctrl+f",
+            tooltip="Press Ctrl+f or click this button to search database",
+        ),
     ]
+
+    def action_custom_palette(self):
+        self.push_screen(self.COMMAND_PALETTE_DISPLAY())
 
     def compose(self) -> ComposeResult:
         self.delete = False
